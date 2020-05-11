@@ -1,8 +1,8 @@
 // tsrafce
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
-import { Album } from '../models/Album'
+import { Album, AlbumsSearchResponse } from '../models/Album'
 
 interface Props {
 
@@ -51,12 +51,46 @@ const fakeResults: Album[] = [
   },
 ]
 
+const authorize = () => {
+  const access_Token = new URLSearchParams(window.location.hash).get('#access_token')
+  if (access_Token) {
+    return access_Token
+  }
+
+  const params = new URLSearchParams({
+    client_id: 'fdc7b9f035c34ef7be6cd42db0b9ea3b',
+    response_type: 'token',
+    redirect_uri: 'http://localhost:3000/'
+  })
+  const url = 'https://accounts.spotify.com/authorize?' + params.toString()
+  window.location.replace(url)
+}
+
+
+const searchAlbumsAPI = (query: string, token: string) => {
+  const params = new URLSearchParams({
+    type: 'album', query: 'batman'
+  })
+  return fetch('https://api.spotify.com/v1/search?' + params.toString(), {
+    headers: { 'Authorization': 'Bearer ' + token }
+  })
+    .then(resp => resp.json() as Promise<AlbumsSearchResponse>)
+    .then(resp => resp.albums.items)
+}
+
+
 const SearchView = (props: Props) => {
+  const [token, setToken] = useState<string>('')
   const [results, setResults] = useState<Album[]>([])
 
+  useEffect(() => {
+    const token = authorize();
+    token && setToken(token)
+  }, [true])
+
   const searchAlbums = (q: string) => {
-    // setResults(fakeResults)
-    console.log(q)
+    searchAlbumsAPI(q, token)
+      .then(resp => setResults(resp))
   }
 
   return (

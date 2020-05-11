@@ -9,9 +9,12 @@ const SearchForm = ({ onSearch }: Props) => {
   const [query, setQuery] = useState('batman')
   const [type, setType] = useState('album')
 
+  const isFirst = useRef<boolean>(true)
   const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
+    if (isFirst.current) { isFirst.current = false; return }
+
     const handler = setTimeout(() => {
       onSearch(query)
     }, 500)
