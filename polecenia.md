@@ -15,3 +15,7 @@ npm i -g create-react-app
 create-react-app --help
 
 
+# == Plugins
+- Emmet
+- Snippets
+  - https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
