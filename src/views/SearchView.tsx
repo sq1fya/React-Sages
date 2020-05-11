@@ -1,27 +1,31 @@
 // tsrafce
 import React from 'react'
+import SearchForm from '../components/SearchForm'
+import SearchResults from '../components/SearchResults'
 
 interface Props {
 
 }
 
-const Search = (props: Props) => {
+const SearchView = (props: Props) => {
   return (
     <div>
       <h3>Search</h3>
 
       <div className="row">
         <div className="col">
-          Search form
+          <SearchForm />
         </div>
       </div>
+
       <div className="row">
         <div className="col">
-          Search results
+          <SearchResults />
         </div>
       </div>
+
     </div>
   )
 }
 
-export default Search
+export default SearchView

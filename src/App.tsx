@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 // import 'bootstrap/scss/bootstrap.scss' // npm i node-sass
 import 'bootstrap/dist/css/bootstrap.css'
-import Search from './views/Search';
+import SearchView from './views/SearchView';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <div className="row">
           <div className="col">
             <h1>React Szybki Start</h1>
-            <Search />
+            <SearchView />
           </div>
         </div>
       </div>
