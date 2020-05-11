@@ -22,3 +22,6 @@ create-react-app --help
 
 - Types
   - https://quicktype.io
+
+- Devtools
+  - https://chrome.google.com/webstore/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi

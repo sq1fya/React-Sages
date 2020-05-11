@@ -55,7 +55,8 @@ const SearchView = (props: Props) => {
   const [results, setResults] = useState<Album[]>([])
 
   const searchAlbums = (q: string) => {
-    setResults(fakeResults)
+    // setResults(fakeResults)
+    console.log(q)
   }
 
   return (

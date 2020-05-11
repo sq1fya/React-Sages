@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 
 interface Props {
   query?: string,
@@ -9,31 +9,40 @@ const SearchForm = ({ onSearch }: Props) => {
   const [query, setQuery] = useState('batman')
   const [type, setType] = useState('album')
 
+  const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      onSearch(query)
+    }, 500)
+
+    return () => clearTimeout(handler)
+  }, [query, type])
+
+  useEffect(() => {
+    inputRef.current?.focus()
+  }, [])
+
   return (
     <div>
       <div className="input-group mb-3">
-        <input type="text" className="form-control" placeholder="Search" value={query} onChange={event => setQuery(event.target.value)} />
+        <input type="text" className="form-control" placeholder="Search"
+          ref={inputRef}
+          value={query} onChange={event => setQuery(event.target.value)} />
 
-        {/* 
-        <div className="input-group-append">
-          <div className="form-text px-3">{170 - query.length} / 170</div>
-        </div>
-        <select value={type} onChange={e => setType(e.target.value)}>
-          <option value="album">Album</option>
-          <option value="artist">Artist</option>
-        </select> */}
+        <input type="text" className="form-control" placeholder="Search"
+          value={type} onChange={event => setType(event.target.value)} />
 
-        <div className="input-group-append">
-          <button className="btn btn-outline-secondary"
-            onClick={() => {
-              onSearch(query)
-            }}>
-            Search
-          </button>
-        </div>
       </div>
     </div>
   )
 }
 
 export default SearchForm
+
+{/* <div className="input-group-append">
+  <button className="btn btn-outline-secondary"
+    onClick={() => onSearch(query)}>
+    Search
+  </button>
+</div> */}
