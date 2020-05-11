@@ -8,11 +8,14 @@ import * as serviceWorker from './serviceWorker';
 // ;(window).React = React
 // ;(window).ReactDOM = ReactDOM
 
-const PersonCard =  (dane: any) => {
-  return <div className="test" style={{ color: dane.color }}>
-    <p>{dane.person} has a  {dane.pet}</p>
-  </div>
+type P = {
+  color: string, person: string, pet: string
 }
+
+const PersonCard: React.FunctionComponent<P> = (props) => <div className="test" style={{ color: props.color }}>
+  <p>{props.person} has a  {props.pet}</p>
+</div>
+
 
 
 ReactDOM.render(
