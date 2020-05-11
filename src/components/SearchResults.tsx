@@ -5,13 +5,14 @@ interface Props {
   results?: Album[]
 }
 
-const SearchResults: FC<Props> = (props) => {
-
+const SearchResults: FC<Props> = ({results}) => {
+  // const {results} = props
+  
   return (
     <div>
       <div className="row row-cols-1 row-cols-md-2">
         {
-          props.results?.map(result => <div key={result.id}
+          results?.map(result => <div key={result.id}
             className="col mb-4">
             <div className="card">
 

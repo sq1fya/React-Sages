@@ -1,5 +1,5 @@
 // tsrafce
-import React from 'react'
+import React, { useState } from 'react'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
 import { Album } from '../models/Album'
@@ -8,7 +8,7 @@ interface Props {
 
 }
 
-const results: Album[] = [
+const fakeResults: Album[] = [
   {
     id: '123',
     name: 'TEst album',
@@ -52,7 +52,11 @@ const results: Album[] = [
 ]
 
 const SearchView = (props: Props) => {
+  const [results, setResults] = useState<Album[]>([])
 
+  const searchAlbums = (q: string) => {
+    setResults(fakeResults)
+  }
 
   return (
     <div>
@@ -60,7 +64,7 @@ const SearchView = (props: Props) => {
 
       <div className="row">
         <div className="col">
-          <SearchForm />
+          <SearchForm query="" onSearch={searchAlbums} />
         </div>
       </div>
 
