@@ -19,3 +19,6 @@ create-react-app --help
 - Emmet
 - Snippets
   - https://marketplace.visualstudio.com/items?itemName=dsznajder.es7-react-js-snippets
+
+- Types
+  - https://quicktype.io
