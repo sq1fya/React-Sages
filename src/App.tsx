@@ -19,9 +19,9 @@ function App() {
               <h1>React Szybki Start</h1>
 
               <Switch>
-                <Route path="" exact={true} component={SearchView} />
-                <Route path="album" component={AlbumDetails} />
-                <Route path="**" render={() => <h1>Page not found!</h1>} />
+                <Route path="/" exact={true} component={SearchView} />
+                <Route path="/album" component={AlbumDetails} />
+                <Route path="/**" render={() => <h1>Page not found!</h1>} />
               </Switch>
 
             </div>

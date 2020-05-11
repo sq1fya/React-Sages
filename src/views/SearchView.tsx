@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react'
 import SearchForm from '../components/SearchForm'
 import SearchResults from '../components/SearchResults'
 import { Album, AlbumsSearchResponse } from '../models/Album'
+import { useLocation } from 'react-router-dom'
 
 interface Props {
 
@@ -88,18 +89,22 @@ const searchAlbumsAPI = (query: string) => {
 
 
 const SearchView = (props: Props) => {
+  const [query, setQuery] = useState('batman')
   const [results, setResults] = useState<Album[]>([])
+  const location = useLocation()
 
   const searchAlbums = (q: string) => {
     searchAlbumsAPI(q)
-      .then(resp => {
-        setResults(resp)
-      })
+      .then(resp => setResults(resp))
   }
 
   useEffect(() => {
-    searchAlbums('batman')
-  }, [])
+    const params = new URLSearchParams(location.search)
+    const query = params.get('q') || 'batman'
+    setQuery(query)
+  }, [location])
+
+  useEffect(() => searchAlbums(query), [query])
 
   return (
     <div>
@@ -107,7 +112,7 @@ const SearchView = (props: Props) => {
 
       <div className="row">
         <div className="col">
-          <SearchForm query="" onSearch={searchAlbums} />
+          <SearchForm query={query} onSearch={searchAlbums} />
         </div>
       </div>
 

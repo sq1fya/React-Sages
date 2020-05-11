@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useRef } from 'react'
 
 interface Props {
-  query?: string,
+  query: string,
   onSearch: (q: string) => any
 }
 
-const SearchForm = ({ onSearch }: Props) => {
-  const [query, setQuery] = useState('batman')
+const SearchForm = ({ query: parentQuery, onSearch }: Props) => {
+  const [query, setQuery] = useState<string>(parentQuery)
   const [type, setType] = useState('album')
 
   const isFirst = useRef<boolean>(true)
   const inputRef = useRef<HTMLInputElement>(null)
+
+  useEffect(() => setQuery(parentQuery), [parentQuery])
 
   useEffect(() => {
     if (isFirst.current) { isFirst.current = false; return }
@@ -33,8 +35,8 @@ const SearchForm = ({ onSearch }: Props) => {
           ref={inputRef}
           value={query} onChange={event => setQuery(event.target.value)} />
 
-        <input type="text" className="form-control" placeholder="Search"
-          value={type} onChange={event => setType(event.target.value)} />
+        {/* <input type="text" className="form-control" placeholder="Search"
+          value={type} onChange={event => setType(event.target.value)} /> */}
 
       </div>
     </div>
