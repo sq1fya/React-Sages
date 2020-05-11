@@ -52,8 +52,13 @@ const fakeResults: Album[] = [
 ]
 
 const authorize = () => {
-  const access_Token = new URLSearchParams(window.location.hash).get('#access_token')
+  const token = JSON.parse(sessionStorage.getItem('token') || 'null')
+  if (token) { return token }
+
+  const access_Token = new URLSearchParams(window.location.hash).get('#/access_token')
   if (access_Token) {
+    sessionStorage.setItem('token', JSON.stringify(access_Token))
+    window.location.hash = ''
     return access_Token
   }
 
@@ -67,9 +72,12 @@ const authorize = () => {
 }
 
 
-const searchAlbumsAPI = (query: string, token: string) => {
+const searchAlbumsAPI = (query: string) => {
+  const token = authorize()
+  if (!token) { return Promise.reject('No Token') }
+
   const params = new URLSearchParams({
-    type: 'album', query: 'batman'
+    type: 'album', query
   })
   return fetch('https://api.spotify.com/v1/search?' + params.toString(), {
     headers: { 'Authorization': 'Bearer ' + token }
@@ -80,18 +88,18 @@ const searchAlbumsAPI = (query: string, token: string) => {
 
 
 const SearchView = (props: Props) => {
-  const [token, setToken] = useState<string>('')
   const [results, setResults] = useState<Album[]>([])
 
-  useEffect(() => {
-    const token = authorize();
-    token && setToken(token)
-  }, [true])
-
   const searchAlbums = (q: string) => {
-    searchAlbumsAPI(q, token)
-      .then(resp => setResults(resp))
+    searchAlbumsAPI(q)
+      .then(resp => {
+        setResults(resp)
+      })
   }
+
+  useEffect(() => {
+    searchAlbums('batman')
+  }, [])
 
   return (
     <div>
